@@ -8,7 +8,7 @@
 
 int main(int argc, char *argv[]) {
   FileReader::filedata_t fileData =
-      FileReader::read_file("../data/zybo_recording1.raw");
+      FileReader::read_file("/home/theia-experiments/DEV/input/recordings/zybo_star-recording_test_slew5.raw");
 
   int width = fileData.metadata.width;
   int height = fileData.metadata.height;
