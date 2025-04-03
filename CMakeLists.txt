@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION "3.19.2")
 set (CMAKE_CXX_STANDARD 11)
 
 option(PACKAGE_PATH "path to packages (optional)" OFF)
+set (GLOBALINCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/..")
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release)
@@ -24,16 +25,18 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 project(main)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(Eigen3 QUIET)
+# find_package(Eigen3 QUIET)
 find_package(nlohmann_json QUIET)
 
-if(NOT Eigen3_FOUND AND PACKAGE_PATH)
-  set(Eigen3_DIR ${PACKAGE_PATH}/eigen-3.4.0/cmake)
-  find_package(Eigen3 REQUIRED )
-elseif(NOT Eigen3_FOUND)
-  set(Eigen3_DIR ${CMAKE_SOURCE_DIR}/packages/eigen-3.4.0/cmake)
-  find_package(Eigen3 QUIET)
-endif()
+# if(NOT Eigen3_FOUND AND PACKAGE_PATH)
+#   set(Eigen3_DIR ${PACKAGE_PATH}/eigen-3.4.0/cmake)
+#   find_package(Eigen3 REQUIRED )
+# elseif(NOT Eigen3_FOUND)
+#   set(Eigen3_DIR ${CMAKE_SOURCE_DIR}/packages/eigen-3.4.0/cmake)
+#   find_package(Eigen3 QUIET)
+# endif()
+
+target_include_directories(${MAIN} PRIVATE "${GLOBALINCLUDE_DIR}/eigen-3.4.0")
 
 if(NOT nlohmann_json_FOUND AND PACKAGE_PATH)
   set(nlohmann_json_DIR ${PACKAGE_PATH}/json/build)
@@ -55,7 +58,7 @@ add_executable(main src/main.cpp)
 target_link_libraries(main filereader)
 target_link_libraries(main contrastmax)
 
-target_link_libraries(main Eigen3::Eigen)
+# target_link_libraries(main Eigen3::Eigen)
 target_link_libraries(main nlohmann_json::nlohmann_json)
 target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/optim/)
 
