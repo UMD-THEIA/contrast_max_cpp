@@ -1,6 +1,0 @@
-{
-  "filepath": "../data/data.raw",
-  "blur": true,
-  "timeslice": 1000,
-  "generate_images": true
-}

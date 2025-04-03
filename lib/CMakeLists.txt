@@ -3,7 +3,8 @@ add_library(contrastmax contrastmax.cpp)
 
 target_include_directories(filereader PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 target_include_directories(contrastmax PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(contrastmax PRIVATE "${GLOBALINCLUDE_DIR}/eigen-3.4.0")
 target_include_directories(contrastmax PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/optim/)
 
-target_link_libraries(filereader Eigen3::Eigen)
-target_link_libraries(contrastmax Eigen3::Eigen)
+# target_link_libraries(filereader Eigen3::Eigen)
+# target_link_libraries(contrastmax Eigen3::Eigen)

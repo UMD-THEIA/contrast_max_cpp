@@ -26,7 +26,7 @@ project(main)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # find_package(Eigen3 QUIET)
-find_package(nlohmann_json QUIET)
+# find_package(nlohmann_json QUIET)
 
 # if(NOT Eigen3_FOUND AND PACKAGE_PATH)
 #   set(Eigen3_DIR ${PACKAGE_PATH}/eigen-3.4.0/cmake)
@@ -36,24 +36,32 @@ find_package(nlohmann_json QUIET)
 #   find_package(Eigen3 QUIET)
 # endif()
 
-target_include_directories(${MAIN} PRIVATE "${GLOBALINCLUDE_DIR}/eigen-3.4.0")
-
-if(NOT nlohmann_json_FOUND AND PACKAGE_PATH)
-  set(nlohmann_json_DIR ${PACKAGE_PATH}/json/build)
-  find_package(nlohmann_json REQUIRED)
-elseif(NOT nlohmann_json_FOUND)
-  set(nlohmann_json_DIR ${CMAKE_SOURCE_DIR}/packages/json/build)
-  find_package(nlohmann_json QUIET)
-endif()
-
-if(NOT nlohmann_json_FOUND)
-  message(FATAL_ERROR "Unable to find nlohmann_json in the default paths, please install the packages or set the PACKAGE_PATH option with: \n -DPACKAGE_PATH=\{path\}")
-endif()
-if(NOT Eigen3_FOUND)
-  message(FATAL_ERROR "Unable to find Eigen3 in the default paths, please install the packages or set the PACKAGE_PATH option with: \n -DPACKAGE_PATH=\{path\}")
-endif()
 
 add_executable(main src/main.cpp)
+
+
+target_include_directories(main PRIVATE "${GLOBALINCLUDE_DIR}/eigen-3.4.0")
+
+
+cmake_path (SET JSON_SOURCE_DIR "${GLOBALINCLUDE_DIR}/json")
+cmake_path (SET JSON_BINARY_DIR "${CMAKE_CURRENT_BINARY_DIR}/json")
+add_subdirectory (${JSON_SOURCE_DIR} ${JSON_BINARY_DIR})
+
+
+# if(NOT nlohmann_json_FOUND AND PACKAGE_PATH)
+#   set(nlohmann_json_DIR ${PACKAGE_PATH}/json/build)
+#   find_package(nlohmann_json REQUIRED)
+# elseif(NOT nlohmann_json_FOUND)
+#   set(nlohmann_json_DIR ${CMAKE_SOURCE_DIR}/packages/json/build)
+#   find_package(nlohmann_json QUIET)
+# endif()
+
+# if(NOT nlohmann_json_FOUND)
+#   message(FATAL_ERROR "Unable to find nlohmann_json in the default paths, please install the packages or set the PACKAGE_PATH option with: \n -DPACKAGE_PATH=\{path\}")
+# endif()
+# if(NOT Eigen3_FOUND)
+#   message(FATAL_ERROR "Unable to find Eigen3 in the default paths, please install the packages or set the PACKAGE_PATH option with: \n -DPACKAGE_PATH=\{path\}")
+# endif()
 
 target_link_libraries(main filereader)
 target_link_libraries(main contrastmax)
