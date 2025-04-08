@@ -151,6 +151,12 @@ void write_image(image_t image, std::string image_path) {
   return;
 }
 
+void create_pgm_vector(uint8_t* arr, size_t size, image_t image) {
+  for (size_t i = 0; i < size; ++i) {
+    arr[i] = static_cast<uint8_t>(image.imagedata[i]);
+  }
+}
+
 std::vector<uint64_t> flatten_vec(std::vector<std::vector<uint64_t>> vector) {
   std::vector<uint64_t> flat_vec;
   for (auto vec : vector) {

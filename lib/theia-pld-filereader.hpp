@@ -125,6 +125,23 @@ std::vector<event_t> filter_event_time(std::vector<event_t> events,
   return filtered_events;
 }
 
+filedata_t get_events(std::vector<event_t> input_events, uint64_t min_time, uint64_t max_time) {
+  filedata_t filedata;
+  std::vector<event_t> events = {};
+  metadata_t metadata;
+
+  if (metadata.width == 0 || metadata.height == 0) {
+    metadata.width = 1280;
+    metadata.height = 720;
+  }
+  metadata.min_time = min_time;
+  metadata.max_time = max_time;
+
+  filedata.metadata = metadata;
+  filedata.events = input_events;
+  return filedata;
+}
+
 filedata_t read_file(std::string filename) {
   filedata_t filedata;
   std::vector<event_t> events = {};
